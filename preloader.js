@@ -1,7 +1,7 @@
 // Create the overlay and SVG elements
 const overlay = document.createElement('div');
 overlay.id = 'loader';
-overlay.style.cssText = 
+overlay.style.cssText = `
     display: flex;
     justify-content: center;
     align-items: center;
@@ -12,12 +12,12 @@ overlay.style.cssText =
     height: 100%;
     background-color: rgba(255, 255, 255, 0.7);
     z-index: 999;
-;
+`;
 
 const svgImage = document.createElement('img');
 svgImage.id = 'svgImage';
 svgImage.src = 'https://igormtssantos.github.io/preloaderJs/image.svg';
-svgImage.style.cssText = 
+svgImage.style.cssText = `
     max-width: 100%;
     max-height: 100%;
     display: none;
@@ -25,7 +25,7 @@ svgImage.style.cssText =
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-;
+`;
 svgImage.style.display = 'none';
 
 // Append the elements to the body

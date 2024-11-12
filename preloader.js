@@ -1,4 +1,3 @@
-// Create the overlay and SVG elements
 const overlay = document.createElement('div');
 overlay.id = 'loader';
 overlay.style.cssText = `
@@ -14,37 +13,66 @@ overlay.style.cssText = `
     z-index: 999;
 `;
 
+// Container for the SVG and shimmer effect
+const container = document.createElement('div');
+container.style.cssText = `
+    position: relative;
+    width: 200px; /* Set based on your SVG dimensions */
+    height: 200px; /* Set based on your SVG dimensions */
+`;
+
+// Add the SVG image
 const svgImage = document.createElement('img');
 svgImage.id = 'svgImage';
 svgImage.src = 'https://igormtssantos.github.io/preloaderJs/image.svg';
 svgImage.style.cssText = `
-    max-width: 100%;
-    max-height: 100%;
-    display: none;
+    width: 100%;
+    height: 100%;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 0;
+    left: 0;
 `;
-svgImage.style.display = 'none';
 
-// Append the elements to the body
+// Add the shimmer effect overlay
+const shimmerOverlay = document.createElement('div');
+shimmerOverlay.style.cssText = `
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.2) 25%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0.2) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    pointer-events: none;
+`;
+
+// Append the elements
+container.appendChild(svgImage);
+container.appendChild(shimmerOverlay);
+overlay.appendChild(container);
 document.body.appendChild(overlay);
-document.body.appendChild(svgImage);
 
-// Function to hide the overlay and display the SVG
+// Function to hide the loader when everything is loaded
 function hideOverlay() {
     overlay.style.display = 'none';
-    svgImage.style.display = 'block';
 }
 
-// Add an event listener to hide the overlay when all external JS files are loaded
+// Add an event listener to hide the overlay when the page is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    // Replace the following lines with the actual code that loads your external JS files
-    // For demonstration purposes, we'll use a setTimeout to simulate loading external JS files.
-    setTimeout(hideOverlay, 100); // Replace with your actual loading code.
+    setTimeout(hideOverlay, 100); // Simulate loading time
 });
 
-// Fallback: If all external resources are loaded and the DOMContentLoaded event doesn't fire,
-// we'll still hide the overlay when the window's load event is triggered.
-window.addEventListener('load', hideOverlay);
+// Add the shimmer animation to CSS
+const style = document.createElement('style');
+style.innerHTML = `
+    @keyframes shimmer {
+        0% {
+            background-position: -200% 0;
+        }
+        100% {
+            background-position: 200% 0;
+        }
+    }
+`;
+document.head.appendChild(style);
